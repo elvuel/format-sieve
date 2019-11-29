@@ -1,4 +1,4 @@
-package format_sieve
+package formatsieve
 
 // Conventions:
 //
@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	BoxMissing = "box missing"
+	BoxMissing     = "box missing"
 	ElementMissing = "element missing"
 )
 
@@ -46,7 +46,6 @@ var (
 
 var DefaultAssembler *Assembler
 
-
 func init() {
 	DefaultAssembler = NewAssembler()
 }
@@ -73,7 +72,9 @@ func (ele Element) Valid() bool {
 }
 
 func (b *Box) AddElement(e Element) {
-	if !e.Valid() { return }
+	if !e.Valid() {
+		return
+	}
 
 	found := false
 	for _, ele := range b.Elements {
@@ -160,7 +161,7 @@ func (a *Assembler) Add(b *Box) {
 }
 
 func (a *Assembler) Find(name string) reflect.Type {
-	if a.Boxes[name] == nil {
+	if _, e := a.Boxes[name]; e == false {
 		panic(BoxMissing)
 	}
 	return a.Boxes[name]

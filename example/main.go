@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	ss "format-sieve"
+	ss "github.com/elvuel/format-sieve"
 )
 
 func main() {
