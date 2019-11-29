@@ -184,7 +184,7 @@ func TestAssembler_Find(t *testing.T) {
 
 	assembler := NewAssembler()
 	fooo := missAssemblerFunc(assembler, "foobar")
-	if fooo != BoxMissing {
+	if fooo != boxMissing {
 		t.Error("should get box missing message")
 	}
 
@@ -327,7 +327,7 @@ func TestBox_Structured(t *testing.T) {
 	}
 
 	fooo := missBoxFunc()
-	if fooo != ElementMissing {
+	if fooo != elementMissing {
 		t.Error("should got element missing panic message")
 	}
 
@@ -444,7 +444,7 @@ func TestBox_Structured(t *testing.T) {
 	}
 
 	fooo = missFunc()
-	if fooo != BoxMissing {
+	if fooo != boxMissing {
 		t.Error("should get box missing message")
 	}
 }
