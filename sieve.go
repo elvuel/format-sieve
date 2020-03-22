@@ -13,6 +13,7 @@ import (
 const (
 	boxMissing     = "box missing"
 	elementMissing = "element missing"
+	structRequired = "must be called with a struct type"
 )
 
 var (
@@ -74,6 +75,52 @@ func (ele Element) Valid() bool {
 // NewBox returns new box
 func NewBox(assembler *Assembler, name string) *Box {
 	return &Box{Assembler: assembler, Name: name, Elements: make([]Element, 0)}
+}
+
+// TODO
+// 调整Element# Type 为 interface{} 支持 string以及reflect.Type？ 如果是string则无法找到的保留在assembler中
+// 添加特例 -> 指定包/结构 转为 指定类型 如 time.Time -> string
+
+// NewBoxFrom returns new box from the given struct
+// ignores the nested struct and anonymous
+// 从指定struct中 提取字段 -- 忽略 嵌套struct及嵌入field
+func NewBoxFrom(val interface{}, exceptFields ...string) *Box {
+	v := reflect.ValueOf(val)
+	v = reflect.Indirect(v)
+	if v.Kind() != reflect.Struct {
+		panic(structRequired)
+	}
+
+	// vType := v.Type()
+
+	for i := 0; i < v.NumField(); i++ {
+		// child := v.Field(i)
+		// childType := vType.Field(i)
+
+		// childPrefix := prefix
+
+		// key, anonymous := keyForField(childType, child)
+
+		// if childType.PkgPath != "" || (key == "" && !anonymous) {
+		// 	continue
+		// } else if !anonymous {
+		// 	childPrefix = prefix + key + "."
+		// }
+
+		// child = extractStruct(child, child)
+
+		// if child.Kind() == reflect.Struct {
+		// 	childAdded := recursiveFlatten(child, childPrefix, output)
+		// 	if childAdded != 0 {
+		// 		added += childAdded
+		// 		continue
+		// 	}
+		// }
+
+		// output[prefix+key] = child.Addr().Interface()
+		// added++
+	}
+	return nil
 }
 
 // AddElement adds an elemnt to the box
